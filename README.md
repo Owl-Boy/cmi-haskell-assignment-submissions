@@ -10,6 +10,6 @@ The structure for the repo will be like -
   - user2.1.hs
 - assign2
   - user1.2.hs
-  - user2.2.hs
+  - user2.2.hs   
 Name your solution file `username.<assignment-num>.hs`, add to the corresponding
 folder.
