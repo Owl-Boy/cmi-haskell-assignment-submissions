@@ -16,4 +16,5 @@ The structure for the repo will be like -
 Name your solution file `username.<assignment-num>.hs`, add to the corresponding
 folder.  
 
-Push project files atleast 3 days after the submission date.
+Push project files atleast 3 days after the submission date.  
+A folder with the name of the assignment will be created 3 days after the submission date, add your files to that folder.
