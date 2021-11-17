@@ -17,4 +17,11 @@ Name your solution file `username.<assignment-num>.hs`, add to the corresponding
 folder.  
 
 Push project files atleast 3 days after the submission date.  
-A folder with the name of the assignment will be created 3 days after the submission date, add your files to that folder.
+A folder with the name of the assignment will be created 3 days after the submission date, add your files to that folder.  
+
+Uploading files using The website GUI:
+
+
+
+Uploading files using command line:
+
