@@ -21,6 +21,9 @@ A folder with the name of the assignment will be created 3 days after the submis
 
 Uploading files using The website GUI:
 
+Click on the fork button in the top right corner of the web page  
+![](/images%for%README/Fork_button.png)
+
 
 
 Uploading files using command line:
