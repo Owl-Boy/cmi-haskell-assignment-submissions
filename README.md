@@ -27,7 +27,7 @@ A folder with the name of the assignment will be created 3 days after the submis
 
 
 - Step 2:  
-  Eneter the directory of the assignment you want to submit
+  Enter the directory of the assignment you want to submit
   ![yo](/images%20for%20README/folder.png)
   
   
@@ -40,7 +40,7 @@ A folder with the name of the assignment will be created 3 days after the submis
   
   
 - Step 4:
-  Go back to the mail page of the fork and click on Contribute then `Open Pull Request` 
+  Go back to the main page of the fork and click on Contribute then `Open Pull Request` 
   ![yo](/images%20for%20README/PR1.png)  
   You should be on a page where you can view the changes you have made, after making sure than you have added the correct file in the correct directory, click on   `Create Pull Request`
   ![yo](/images%20for%20README/PR2.png)
