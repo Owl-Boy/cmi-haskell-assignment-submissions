@@ -65,7 +65,9 @@ After you have pushed your fork to the main repository, changes might be made to
 ![](https://docs.github.com/assets/images/help/repository/fetch-and-merge-button.png)
 
 
-If the changes from the upstream repository cause conflicts, GitHub will prompt you to create a pull request to resolve the conflicts.
+If the changes from the upstream repository cause conflicts, GitHub will prompt you to create a pull request to resolve the conflicts.  
+
+You can then follow from step 2 of the previos section to add files again
 
 
 ## Uploading files using command line:
