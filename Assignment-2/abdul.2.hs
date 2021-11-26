@@ -1,11 +1,12 @@
 import Data.List
+import Control.Applicative
 
 -- Question 1
 
 shrink :: Eq a => [a] -> [a]
 shrink [] = []
 shrink [x] = [x]
-shrink (x:xs) = if x == head xs then shrink xs else x : shrink xs
+shrink (x:xs)|(x == head xs)=shrink xs|1>0=x:shrink xs
 
 -- Question 2
 
@@ -24,23 +25,23 @@ squares = [(x,y) | x <- [0..7], y <- [0..7]]
 
 -- ` foldr (.) id ` simply threads a value through the composition of a list of functions
 knightMove :: (Int,Int) -> Int -> [(Int,Int)]
-knightMove start n = shrink $ sort $ foldr (.) id (replicate n $ concatMap posAfter1Move) [start] where 
-  posAfter1Move (x,y) = filter (\(x,y) -> x >= 0 && y >= 0) [(x+2,y+1), (x+2,y-1), (x-2,y+1), (x-2,y-1), (x+1, y-2), (x+1,y+2), (x-1, y-2), (x-1,y+2)]
+knightMove start n = myNub . foldr (.) id (replicate n (>>=posAfter1Move)) $ [start] where 
+  posAfter1Move (x,y) = filter (liftA2 (&&) ((>= 0) . fst) ((>= 0) . snd)) [(x+2,y+1), (x+2,y-1), (x-2,y+1), (x-2,y-1), (x+1, y-2), (x+1,y+2), (x-1, y-2), (x-1,y+2)]
 
 -- Question 4 
 
 knightMove' :: (Int,Int) -> Int -> [(Int,Int)]
-knightMove' start n = shrink $ sort $ concatMap (knightMove start) [0..n]
+knightMove' = (myNub.) . (. enumFromTo 0) . concatMap . knightMove
 
 -- Question 5
 
 tuples :: [[a]] -> [[a]]
-tuples lsts = foldr (\l ls -> [x : xs | x <- l, xs <- ls]) [[]] lsts
+tuples = mapM id
 
 -- Question 6
 
 injTuples :: Eq a => [[a]] -> [[a]]
-injTuples = filter (\l -> (length . nub $ l) == length l) . tuples 
+injTuples = filter (liftA2 (==) length (length . nub)) . tuples 
 
 -- Question 7
 
@@ -54,12 +55,9 @@ c = ["AD", "DJ", "Dwight"]
 traditionalLineUps :: [[String]]
 traditionalLineUps = injTuples [pg, sg, sf, pf, c]
 
-
-combinations k ns = filter ((k==).length) $ subsequences ns
-
+combinations = (. subsequences) . filter . (. length) . (==)
 lineUps :: Eq a => [(Int, [a])] -> [[a]]
-lineUps [] = [[]]
-lineUps lst@((m,xs):ys) = filter (( (==) . sum . map fst $ lst) . length . nub) $ (++) <$> (combinations m xs) <*> lineUps ys
+lineUps = filter (liftA2 (==) length (length . nub)) . foldr (<*>) [[]] . map (((++) <$>) . uncurry combinations)
 
 fc1, bc1 :: [String]
 fc1 = ["LeBron", "AD", "Dwight", "Melo", "THT"]
