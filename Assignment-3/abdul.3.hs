@@ -51,9 +51,8 @@ approxRoot6 eps = head $ dropWhile (\r -> abs (root6 - evalRat r) > eps) $ map a
 
 -- Question 5 
 
-f = foldr (\a b -> 0 `max` (a+b)) 0
 mss :: [Int] -> Int 
-mss = maximum . map f . tails . map (^3)
+mss = maximum . scanr (\a b -> 0 `max` a+b) 0 . map (^3)
 
 -- Question 6
  
