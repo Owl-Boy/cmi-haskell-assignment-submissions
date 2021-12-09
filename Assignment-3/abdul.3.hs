@@ -57,16 +57,19 @@ mss = maximum . map f . tails . map (^3)
 
 -- Question 6
  
-
 lps :: Eq a => [a] -> (Int,[a])
-lps seq
-  | seq == [] = (0,[])
-  | length seq == 1 = (1,seq)
-  | head seq == last seq = (2 + fst mid, [head seq] ++ snd mid ++ [last seq])
-  | otherwise = (max p q, maximumBy (compare `on` length) $ [x,y])
+lps seq = subseqs ! (0,n-1)
   where
-      (a,b) = (init seq, tail seq)
-      (c,d) = (lps a, lps b)
-      (p,q) = (fst c, fst d)
-      (x,y) = (snd c, snd d)
-      mid = lps $ init b
+    n = length seq
+    seqs = listArray (0,n-1) seq
+    subseqs = listArray bounds [lps_aux i j | (i,j) <- range bounds]
+    bounds=((0,0),(n-1,n-1))
+    lps_aux i j
+        | i == j = (1, [seqs ! i])
+        | i > j = (0,[])
+        | seqs ! i == seqs ! j = (2 + fst mid, [seqs ! i] ++ snd mid ++ [seqs ! i])
+        | otherwise = (max (fst c) (fst d), comp (snd c) (snd d))
+      where
+        mid = subseqs ! (i+1, j-1)
+        (c,d) = (subseqs ! (i,j-1), subseqs ! (i+1,j))
+        comp x y = if length x > length y then x else y
