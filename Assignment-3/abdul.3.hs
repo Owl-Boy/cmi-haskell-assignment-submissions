@@ -51,8 +51,11 @@ approxRoot6 eps = head $ dropWhile (\r -> abs (root6 - evalRat r) > eps) $ map a
 
 -- Question 5 
 
+f (u,v) x = (u`max`w, w) where w = 0 `max` (v+x^3)
 mss :: [Int] -> Int 
-mss = maximum . scanr (\a b -> 0 `max` a+b) 0 . map (^3)
+-- cubic
+-- mss = maximum . scanr (\a b -> 0 `max` (a+b)) . map (^3)
+mss = fst . foldl f (0,0)
 
 -- Question 6
  
