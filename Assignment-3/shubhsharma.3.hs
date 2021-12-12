@@ -1,31 +1,32 @@
-import Data.Ratio ( (%), denominator, numerator )
-import Data.Array ( elems, listArray, array, (!) )
+import Data.Array (array, elems, listArray, (!))
+import Data.Ratio (denominator, numerator, (%))
 
 -- Question 1
 selectLeader :: Int -> Int -> Int
-selectLeader size = helper 0 [1..size]
+selectLeader size = helper 0 [1 .. size]
   where
-    helper index (x:xs) step
+    helper index (x : xs) step
       | null xs = x
       | otherwise = helper (index + 1) (xs ++ [x | index `mod` step /= 0]) step
 
--- Question 2 
+-- Question 2
 selectLeader' :: Int -> Int -> [[Int]]
-selectLeader' size step = init $ helper 0 [1..size] step
+selectLeader' size step = init $ helper 0 [1 .. size] step
   where
     helper index ls step
       | length ls == 1 = [ls]
-      | otherwise = let newLs = [ls!!i| i<- [0..(length ls - 1)], i /= index]
-                    in newLs : helper ((index - 1 + step) `mod` length newLs) newLs step
+      | otherwise =
+        let newLs = [ls !! i | i <- [0 .. (length ls - 1)], i /= index]
+         in newLs : helper ((index - 1 + step) `mod` length newLs) newLs step
 
 -- Question 3
 cf :: Rational -> [Integer]
 cf num
-  | denominator num == 1 =  [numerator num]
+  | denominator num == 1 = [numerator num]
   | otherwise = floor num : cf (1 / (num - floor num % 1))
 
 computeRat :: [Integer] -> Rational
-computeRat (x:xs)
+computeRat (x : xs)
   | null xs = x % 1
   | otherwise = x % 1 + 1 / computeRat xs
 
@@ -48,27 +49,31 @@ approxRoot6 = computeRat . helper [floor root6]
         nextList = init intList ++ [last intList + 1]
         next = evalRat $ computeRat nextList
 
--- Question 5 
-mss :: [Int] -> Int 
-mss (x:xs) = helper (x ^ 3) (x ^ 3) xs
+-- Question 5
+mss :: [Int] -> Int
+mss (x : xs) = helper (x ^ 3) (x ^ 3) xs
   where
     helper finalVal candidateVal ls
       | finalVal < candidateVal = helper candidateVal candidateVal ls
       | null ls = finalVal
       | candidateVal <= 0 = helper finalVal (head ls ^ 3) (tail ls)
-      | otherwise = helper finalVal (candidateVal + head ls ^ 3) (tail ls) 
+      | otherwise = helper finalVal (candidateVal + head ls ^ 3) (tail ls)
 
 -- Question 6
 lps :: Eq a => [a] -> (Int, [a])
 lps ls = lcs ls (reverse ls)
   where
-    lcs as bs           = (n, reverse s) where
-        (n, s)          = last (last lcsTab)
-        lcsTab          = fstRow : zipWith nxtRow as lcsTab
-        fstRow          = replicate (length bs + 1) (0, [])
-        nxtRow a r      = (0, []) : zipWith (g a) bs
-                            (zip3 r (tail r) (nxtRow a r))
-        g a b ((m,s'),u,l)
-            | a == b    = (1+m, b:s') 
-            | otherwise = if fst u > fst l then u else l
-        
+    lcs as bs = (n, reverse s)
+      where
+        (n, s) = last (last lcsTab)
+        lcsTab = fstRow : zipWith nxtRow as lcsTab
+        fstRow = replicate (length bs + 1) (0, [])
+        nxtRow a r =
+          (0, []) :
+          zipWith
+            (g a)
+            bs
+            (zip3 r (tail r) (nxtRow a r))
+        g a b ((m, s'), u, l)
+          | a == b = (1 + m, b : s')
+          | otherwise = if fst u > fst l then u else l
