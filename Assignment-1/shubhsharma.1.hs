@@ -24,7 +24,9 @@ numLen x
 isPalin :: Integer -> Integer -> Bool
 isPalin num len
   | len <= 1 = True
-  | otherwise = mod num 10 == (num `div` (10 ^ (len - 1))) && isPalin (num `mod` (10 ^ (len - 1)) `div` 10) (len - 2)
+  | otherwise =
+    mod num 10 == (num `div` (10 ^ (len - 1)))
+      && isPalin (num `mod` (10 ^ (len - 1)) `div` 10) (len - 2)
 
 nextPalin :: Integer -> Integer
 nextPalin num =
