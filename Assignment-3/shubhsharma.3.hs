@@ -70,10 +70,20 @@ lps ls = lcs ls (reverse ls)
         fstRow = replicate (length bs + 1) (0, [])
         nxtRow a r =
           (0, []) :
-          zipWith
+          zipWit
             (g a)
             bs
             (zip3 r (tail r) (nxtRow a r))
         g a b ((m, s'), u, l)
           | a == b = (1 + m, b : s')
           | otherwise = if fst u > fst l then u else l
+
+-- quicksort eh
+quicksort :: Ord a -> [a] -> [a]
+quicksort ls
+  | length ls <= 1= ls
+  | otherwise = quicksort ls1 ++ [pivot] ++ quicksort ls2
+  where
+    pivot = head ls
+    ls1 = [x| x<- (tail ls), x < pivot]
+    ls1 = [x| x<- (tail ls), x >= pivot]
